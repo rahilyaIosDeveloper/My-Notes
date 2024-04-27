@@ -9,9 +9,16 @@
 import UIKit
 import SnapKit
 
+
+protocol HomeViewProtocol {
+    func doneNotes(allNotes: [String])
+}
+
 class HomeView: UIViewController {
     
-    private var allNotes: [String] = ["School notes", "Funny jokes", "Travel bucket list", "Random cooking ideas" ]
+    private var controller: HomeControllerProtocol?
+    
+    private var allNotes: [String] = []
     
     private lazy var searchBar: UISearchBar = {
         let view = UISearchBar()
@@ -52,6 +59,8 @@ class HomeView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        controller = HomeController(view: self)
+        controller?.takeNotes()
         
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
@@ -102,3 +111,11 @@ extension HomeView: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension HomeView: HomeViewProtocol {
+    func doneNotes(allNotes: [String]) {
+        self.allNotes = allNotes
+        notesCollectionView.reloadData()
+    }
+    
+    
+}
