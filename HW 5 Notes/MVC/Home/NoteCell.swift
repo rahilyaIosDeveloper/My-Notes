@@ -6,9 +6,6 @@
 //
 
 import Foundation
-
-
-
 import UIKit
 
 class NoteCell: UICollectionViewCell {
