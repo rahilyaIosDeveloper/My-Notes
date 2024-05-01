@@ -24,6 +24,7 @@ class HomeView: UIViewController {
         let view = UISearchBar()
         view.placeholder = "Search"
         view.layer.cornerRadius = 10
+        view.backgroundImage = UIImage()
         return view
     }()
     
@@ -56,11 +57,29 @@ class HomeView: UIViewController {
         return view
     }()
     
+    
+    private func setupNavigationItem() {
+        title = "Home"
+        let rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "gear"),
+            style: .plain,
+            target: self,
+            action: #selector(settingsButtonTapped))
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
+    
+    @objc func settingsButtonTapped() {
+        let vc = SettingsController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         controller = HomeController(view: self)
         controller?.takeNotes()
+        setupNavigationItem()
         
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
