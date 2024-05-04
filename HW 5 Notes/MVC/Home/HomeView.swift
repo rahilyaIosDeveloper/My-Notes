@@ -126,7 +126,6 @@ extension HomeView: UICollectionViewDataSource {
 extension HomeView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize { 
         return CGSize(width: (collectionView.frame.width - 12) / 2, height: 100)
-
     }
 }
 
@@ -135,6 +134,4 @@ extension HomeView: HomeViewProtocol {
         self.allNotes = allNotes
         notesCollectionView.reloadData()
     }
-    
-    
 }

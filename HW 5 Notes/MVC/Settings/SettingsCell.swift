@@ -85,15 +85,12 @@ class SettingsCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.leading.equalTo(imageTable.snp.trailing).offset(15)
             make.height.equalTo(24)
-            // make.width.equalTo(43)
         }
         
         addSubview(lableLanguage)
         lableLanguage.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalTo(-16)
-            //make.height.equalTo(20)
-            //make.width.equalTo(58)
         }
         contentView.addSubview(buttonTable)
         buttonTable.snp.makeConstraints { make in
