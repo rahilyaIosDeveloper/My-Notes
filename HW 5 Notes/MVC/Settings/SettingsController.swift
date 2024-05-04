@@ -69,7 +69,6 @@ class SettingsController: UIViewController {
     
     @objc
     private func settingsButtonTapped() {
-        
     }
 }
 
@@ -84,12 +83,9 @@ extension SettingsController: UITableViewDataSource {
         cell.delegate = self
         return cell
     }
-    
-    
 }
 
 extension SettingsController: UITableViewDelegate {
-    
 }
 
 extension SettingsController: SettingsDelegate {

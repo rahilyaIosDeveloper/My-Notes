@@ -13,18 +13,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
-        
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
         
-        let nav1 = UINavigationController(rootViewController: SettingsController())
+//        let nav1 = UINavigationController(rootViewController: SettingsController())
+//        
+//        window.rootViewController =  nav1
+        var rootViewController: UIViewController?
         
-        window.rootViewController =  nav1
+        if UserDefaults.standard.bool(forKey: "onBoardShow") {
+            rootViewController = HomeView()
+        } else {
+            rootViewController = OnBoardingView()
+        }
         
+        let navigationController = UINavigationController(rootViewController: rootViewController!)
+        
+        window.rootViewController = navigationController
         self.window = window
-        
         self.window?.makeKeyAndVisible()
     }
 
