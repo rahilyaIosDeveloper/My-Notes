@@ -72,6 +72,8 @@ class SettingsCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.backgroundColor = .secondarySystemBackground
+
         
         
         addSubview(imageTable)
@@ -90,7 +92,7 @@ class SettingsCell: UITableViewCell {
         addSubview(lableLanguage)
         lableLanguage.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.trailing.equalTo(-16)
+            make.trailing.equalTo(-35)
         }
         contentView.addSubview(buttonTable)
         buttonTable.snp.makeConstraints { make in
@@ -116,6 +118,7 @@ class SettingsCell: UITableViewCell {
     func fill(with: SettingsStruct) {
         imageTable.image = UIImage(named: with.image)?.withRenderingMode(.alwaysTemplate)
         lableTable.text = with.title
+        lableLanguage.text = with.description
         buttonTable.setTitle(with.description, for: .normal)
         switch with.type {
         case .withSwitch:
