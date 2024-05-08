@@ -9,7 +9,7 @@
 protocol HomeControllerProtocol {
     func takeNotes()
     
-    func doneNotes(notes: [String])
+    func doneNotes(notes: [Note])
 }
 
 class HomeController: HomeControllerProtocol {
@@ -28,7 +28,7 @@ class HomeController: HomeControllerProtocol {
         model?.tookNotes()
     }
     
-    func doneNotes(notes: [String]) {
+    func doneNotes(notes: [Note]) {
         view?.doneNotes(allNotes: notes)
     }
 }

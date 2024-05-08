@@ -11,14 +11,14 @@ import SnapKit
 
 
 protocol HomeViewProtocol: AnyObject {
-    func doneNotes(allNotes: [String])
+    func doneNotes(allNotes: [Note])
 }
 
 class HomeView: UIViewController {
     
     private var controller: HomeControllerProtocol?
     
-    private var allNotes: [String] = []
+    private var allNotes: [Note] = []
     
     private lazy var searchBar: UISearchBar = {
         let view = UISearchBar()
@@ -68,9 +68,7 @@ class HomeView: UIViewController {
             action: #selector(settingsButtonTapped))
         navigationItem.rightBarButtonItem = rightBarButtonItem
     }
-    
-    
-    
+
     @objc func settingsButtonTapped() {
         let vc = SettingsController()
         navigationController?.pushViewController(vc, animated: true)
@@ -126,7 +124,7 @@ extension HomeView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NoteCell.reuseId, for: indexPath) as! NoteCell
-        cell.fill(title: allNotes[indexPath.row])
+        cell.fill(title: allNotes[indexPath.row].title ?? "")
         return cell
     }
 }
@@ -138,7 +136,7 @@ extension HomeView: UICollectionViewDelegateFlowLayout {
 }
 
 extension HomeView: HomeViewProtocol {
-    func doneNotes(allNotes: [String]) {
+    func doneNotes(allNotes: [Note]) {
         self.allNotes = allNotes
         notesCollectionView.reloadData()
     }

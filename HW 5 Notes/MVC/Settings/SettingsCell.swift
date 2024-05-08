@@ -64,10 +64,7 @@ class SettingsCell: UITableViewCell {
         return view
     }()
     
-    
-    
-    
-    
+ 
     weak var delegate: SettingsDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
