@@ -6,3 +6,17 @@
 //
 
 import Foundation
+import UIKit
+
+protocol NoteControllerProtocol: AnyObject {
+}
+
+class NoteController: NoteControllerProtocol {
+    weak var view: NoteViewProtocol?
+    var model: NoteModelProtocol?
+    
+    init(view: NoteViewProtocol) {
+        self.view = view
+        self.model = NoteModel(controller: self)
+    }
+}

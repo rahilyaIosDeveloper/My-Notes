@@ -7,22 +7,29 @@
 
 import Foundation
 
-protocol HomeModelProtocol {
+protocol HomeModelProtocol: AnyObject {
     func tookNotes()
 }
 class HomeModel: HomeModelProtocol {
     
+    
     private let controller: HomeControllerProtocol?
+    
+    private let coreDataService = CoreDataService.shared
     
     init(controller: HomeControllerProtocol) {
         self.controller = controller
     }
     
     
-    private var allNotes: [String] = ["Run", "Coding", "Walk w friends", "Cook dinner" ]
+    private var allNotes: [String] = []
+    
+    
     
     func tookNotes() {
+//        allNotes = coreDataService.fetchNotes()
         controller?.doneNotes(notes: allNotes)
+       
     }
     
 }

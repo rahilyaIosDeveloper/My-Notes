@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 
-protocol HomeViewProtocol {
+protocol HomeViewProtocol: AnyObject {
     func doneNotes(allNotes: [String])
 }
 
@@ -53,6 +53,7 @@ class HomeView: UIViewController {
         view.backgroundColor = .red
         view.layer.cornerRadius = 42/2
         view.titleLabel?.font = UIFont.systemFont(ofSize: 24)
+        view.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         view.setTitleColor(.white, for: .normal)
         return view
     }()
@@ -68,8 +69,15 @@ class HomeView: UIViewController {
         navigationItem.rightBarButtonItem = rightBarButtonItem
     }
     
+    
+    
     @objc func settingsButtonTapped() {
         let vc = SettingsController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func addButtonTapped() {
+        let vc = NoteView()
         navigationController?.pushViewController(vc, animated: true)
     }
     

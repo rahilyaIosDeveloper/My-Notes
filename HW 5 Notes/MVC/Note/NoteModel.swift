@@ -6,3 +6,18 @@
 //
 
 import Foundation
+import UIKit
+
+protocol NoteModelProtocol {
+}
+
+class NoteModel: NoteModelProtocol {
+    private let coreDataService = CoreDataService.shared
+    
+    var controller: NoteControllerProtocol?
+    
+    init(controller: NoteControllerProtocol) {
+        self.controller = controller
+    }
+    
+}
