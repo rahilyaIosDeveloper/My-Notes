@@ -22,14 +22,12 @@ class HomeModel: HomeModelProtocol {
     }
     
     
-    private var allNotes: [String] = []
+    private var allNotes: [Note] = []
     
     
     
     func tookNotes() {
-//        allNotes = coreDataService.fetchNotes()
+        allNotes = coreDataService.fetchNotes()
         controller?.doneNotes(notes: allNotes)
-       
     }
-    
 }

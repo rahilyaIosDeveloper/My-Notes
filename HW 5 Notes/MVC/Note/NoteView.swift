@@ -10,7 +10,6 @@ import UIKit
 import SnapKit
 
 protocol NoteViewProtocol: AnyObject {
-//    func didAddNewNote()
 }
 
 
@@ -55,10 +54,22 @@ class NoteView: UIViewController {
         return  view
     }()
     
+    private func setupNavigationItem() {
+        title = "NoteView"
+        let rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "gear"),
+            style: .plain,
+            target: self,
+            action: #selector(settingsButtonTapped))
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupConstraints()
+        setupNavigationItem()
     }
     
     @objc func saveButtonTapped() {
@@ -70,6 +81,11 @@ class NoteView: UIViewController {
     }
     
         @objc func copyButtonTapped() {
+    }
+    
+    @objc func settingsButtonTapped() {
+        let vc = SettingsController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     private func generateColor() -> String {
