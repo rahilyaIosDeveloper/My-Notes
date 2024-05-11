@@ -25,13 +25,17 @@ class NoteView: UIViewController {
         let view = UITextField()
         view.placeholder = "Title"
         view.layer.borderWidth = 1
-        view.layer.cornerRadius = 16
+        view.layer.cornerRadius = 12
+        view.placeholder = "Название"
+        let spacerView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 0))
+        view.leftView = spacerView
+        view.leftViewMode = .always
         return view
     }()
     
     private lazy var descriptionTextView: UITextView = {
         let view = UITextView()
-        view.layer.cornerRadius = 14
+        view.layer.cornerRadius = 10
         view.backgroundColor = UIColor(hex: "#EEEEEF")
         return view
     }()
@@ -51,7 +55,7 @@ class NoteView: UIViewController {
         view.setImage(UIImage(named: "copy"), for: .normal)
         view.tintColor = .lightGray
         view.addTarget(self, action: #selector(copyButtonTapped), for: .touchUpInside)
-        return  view
+        return view
     }()
     
     private func setupNavigationItem() {
@@ -90,7 +94,7 @@ class NoteView: UIViewController {
     
     private func generateColor() -> String {
         let color = colors.randomElement()
-        print(color)
+        print(color!)
         switch color! {
         case .systemPink:
             return "pink"

@@ -19,6 +19,7 @@
 		CE3BF4042BE001C9009AC076 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF4032BE001C9009AC076 /* SettingsModel.swift */; };
 		CE4CFB4E2BE6787500E1FC75 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4CFB4D2BE6787500E1FC75 /* OnBoardingView.swift */; };
 		CE4CFB502BE6788A00E1FC75 /* OnBoardingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4CFB4F2BE6788A00E1FC75 /* OnBoardingCell.swift */; };
+		CEA146E62BEF4DB6006EE0BE /* NoteMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA146E52BEF4DB6006EE0BE /* NoteMain.swift */; };
 		CEFF8DBF2BDD1F7000AAF1F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF8DBE2BDD1F7000AAF1F6 /* AppDelegate.swift */; };
 		CEFF8DC12BDD1F7000AAF1F6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF8DC02BDD1F7000AAF1F6 /* SceneDelegate.swift */; };
 		CEFF8DC32BDD1F7000AAF1F6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF8DC22BDD1F7000AAF1F6 /* HomeView.swift */; };
@@ -45,6 +46,7 @@
 		CE3BF4032BE001C9009AC076 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		CE4CFB4D2BE6787500E1FC75 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		CE4CFB4F2BE6788A00E1FC75 /* OnBoardingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingCell.swift; sourceTree = "<group>"; };
+		CEA146E52BEF4DB6006EE0BE /* NoteMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteMain.swift; sourceTree = "<group>"; };
 		CEFF8DBB2BDD1F7000AAF1F6 /* HW 5 Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HW 5 Notes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEFF8DBE2BDD1F7000AAF1F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEFF8DC02BDD1F7000AAF1F6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 		CE01E3552BEB8B1F005F4912 /* Note */ = {
 			isa = PBXGroup;
 			children = (
+				CEA146E52BEF4DB6006EE0BE /* NoteMain.swift */,
 				CE01E3562BEB8B36005F4912 /* NoteView.swift */,
 				CE01E3582BEB8B44005F4912 /* NoteController.swift */,
 				CE01E35A2BEB8B51005F4912 /* NoteModel.swift */,
@@ -261,6 +264,7 @@
 				CE01E34F2BEB894C005F4912 /* Note+CoreDataClass.swift in Sources */,
 				CEFF8DC32BDD1F7000AAF1F6 /* HomeView.swift in Sources */,
 				CE3BF4002BE00195009AC076 /* SettingsCell.swift in Sources */,
+				CEA146E62BEF4DB6006EE0BE /* NoteMain.swift in Sources */,
 				CE01E3542BEB8A7C005F4912 /* CoreDataService.swift in Sources */,
 				CE01E34C2BEB872C005F4912 /* Notes.xcdatamodeld in Sources */,
 				CEFF8DD92BDD208A00AAF1F6 /* Color.swift in Sources */,

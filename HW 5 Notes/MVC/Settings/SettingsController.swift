@@ -10,10 +10,13 @@ import UIKit
 
 class SettingsController: UIViewController {
     
+    private let coreDataService = CoreDataService.shared
+    
     private lazy var settingsTableView: UITableView = {
         let view = UITableView()
         view.delegate = self
         view.dataSource = self
+        view.layer.cornerRadius = 10
         view.register(SettingsCell.self, forCellReuseIdentifier: SettingsCell.reuseId)
         return view
     }()
@@ -51,8 +54,8 @@ class SettingsController: UIViewController {
         view.addSubview(settingsTableView)
         settingsTableView.snp.makeConstraints {make in 
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(151)
-            make.horizontalEdges.equalToSuperview().inset(11)
+            make.height.equalTo(160)
+            make.horizontalEdges.equalToSuperview().inset(12)
         }
     }
 
@@ -86,6 +89,16 @@ extension SettingsController: UITableViewDataSource {
 }
 
 extension SettingsController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 55
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 2 {
+            coreDataService.deleteAllNotes()
+        }
+    }
+    
 }
 
 extension SettingsController: SettingsDelegate {

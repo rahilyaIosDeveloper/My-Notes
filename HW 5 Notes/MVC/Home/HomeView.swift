@@ -133,6 +133,13 @@ extension HomeView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize { 
         return CGSize(width: (collectionView.frame.width - 12) / 2, height: 100)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let noteMain = NoteMain()
+        noteMain.note = allNotes[indexPath.row]
+        navigationController?.pushViewController(noteMain, animated: true)
+    }
+    
 }
 
 extension HomeView: HomeViewProtocol {

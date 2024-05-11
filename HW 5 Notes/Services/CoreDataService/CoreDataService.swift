@@ -31,7 +31,7 @@ class CoreDataService {
         }
         
         let note = Note(entity: entity, insertInto: context)
-        note.id = note.id
+        note.id = id
         note.title = title
         note.desc = description
         note.date = date
@@ -49,4 +49,60 @@ class CoreDataService {
         }
         return []
     }
+    
+    func updateNote(id: String, title: String, description: String, date: Date) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Note")
+        do {
+            guard let notes = try context.fetch(fetchRequest) as? [Note], let note = notes.first(where: { note in
+                note.id == id
+            }) else {
+                return
+            }
+            note.title = title
+            note.desc = description
+            note.date = date
+        } catch {
+            print(error.localizedDescription)
+        }
+        appDelegate.saveContext()
+    }
+    
+    func delete(id: String) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Note")
+        do {
+            guard let notes = try context.fetch(fetchRequest) as? [Note], let note =
+                    notes.first(where: { note in
+                    note.id == id
+                    }) else {
+                return
+            }
+                context.delete(note)
+            
+        } catch {
+            print(error.localizedDescription)
+        }
+        appDelegate.saveContext()
+    }
+    
+    
+    
+    
+    func deleteAllNotes() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Note")
+        do {
+            guard let notes = try context.fetch(fetchRequest) as? [Note]
+            else {
+                return
+            }
+            notes.forEach { note in
+                context.delete(note)
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        appDelegate.saveContext()
+    }
+    
+    
+    
 }
