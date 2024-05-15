@@ -18,6 +18,7 @@ class NoteView: UIViewController {
     weak var delegate: NoteViewProtocol?
  
     private let coreDataService = CoreDataService.shared
+    var note: Note?
     
     private var colors: [UIColor] = [.systemPink, .cyan, .systemOrange, .systemPurple]
     
@@ -59,15 +60,13 @@ class NoteView: UIViewController {
     }()
     
     private func setupNavigationItem() {
-        title = "NoteView"
         let rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "gear"),
+            image: UIImage(systemName: "trash"),
             style: .plain,
             target: self,
-            action: #selector(settingsButtonTapped))
+            action: #selector(deleteButtonTapped))
         navigationItem.rightBarButtonItem = rightBarButtonItem
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +82,14 @@ class NoteView: UIViewController {
         let color = generateColor()
         coreDataService.addNote(id: id, title: titleTextField.text ?? "", description: descriptionTextView.text ?? "", date: date, color: color)
     }
+    
+    @objc func deleteButtonTapped() {
+        guard let note = note, let id = note.id else {
+            return
+        }
+        coreDataService.delete(id: id)
+    }
+    
     
         @objc func copyButtonTapped() {
     }

@@ -74,7 +74,6 @@ class NoteMain: UIViewController {
     }
     
     @objc func saveButtonTapped() {
-        
         guard let note = note, let id = note.id else {
             return
         }
@@ -82,6 +81,7 @@ class NoteMain: UIViewController {
         
         coreDataService.updateNote(id: id, title: titleTextField.text ??  "" , description: descriptionTextView.text, date: date)
     }
+    
     
     func setupData() {
         guard let note = note else {
@@ -109,11 +109,6 @@ class NoteMain: UIViewController {
     
     @objc func copyButtonTapped() {
     }
-    
-//    @objc func settingsButtonTapped() {
-//        let vc = SettingsController()
-//        navigationController?.pushViewController(vc, animated: true)
-//    }
     
     private func setupConstraints() {
         view.addSubview(titleTextField)

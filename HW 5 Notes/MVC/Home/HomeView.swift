@@ -84,7 +84,7 @@ class HomeView: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         controller = HomeController(view: self)
-        controller?.takeNotes()
+        
         setupNavigationItem()
         
         view.addSubview(searchBar)
@@ -114,6 +114,11 @@ class HomeView: UIViewController {
             make.height.width.equalTo(42)
             make.centerX.equalTo(view.snp.centerX)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        controller?.takeNotes()
     }
 }
 

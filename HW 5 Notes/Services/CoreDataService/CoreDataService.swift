@@ -12,7 +12,6 @@ class CoreDataService {
     static let shared = CoreDataService()
     
     private init() {
-        
     }
     
     private var appDelegate: AppDelegate {
@@ -85,8 +84,6 @@ class CoreDataService {
     }
     
     
-    
-    
     func deleteAllNotes() {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Note")
         do {
@@ -102,7 +99,4 @@ class CoreDataService {
         }
         appDelegate.saveContext()
     }
-    
-    
-    
 }

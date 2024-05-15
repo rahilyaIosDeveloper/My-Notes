@@ -10,6 +10,7 @@ import UIKit
 
 protocol SettingsDelegate: AnyObject {
     func didChangeTheme(isOn: Bool)
+    func navigateToNextController()
 }
 
 struct SettingsStruct {
@@ -38,6 +39,7 @@ class SettingsCell: UITableViewCell {
     private lazy var lableTable: UILabel = {
         let view = UILabel()
         view.tintColor = .label
+        view.font = UIFont.systemFont(ofSize: 18)
         return view
     }()
     
@@ -55,6 +57,7 @@ class SettingsCell: UITableViewCell {
             UIImage(systemName: "chevron.compact.right"),
             for: .normal)
         view.tintColor = .label
+        view.addTarget(self, action: #selector(buttonTableTapped(sender:)), for: .touchUpInside)
         return view
     }()
     
@@ -69,7 +72,7 @@ class SettingsCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = .secondarySystemBackground
+       contentView.backgroundColor = .secondarySystemBackground
 
         
         
@@ -112,6 +115,25 @@ class SettingsCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func didSelect() {
+        lableTable.font = UIFont.systemFont(ofSize: 17)
+        lableLanguage.font = UIFont.systemFont(ofSize: 17)
+        imageTable.snp.remakeConstraints { make in
+            make.width.height.equalTo(20)
+            make.centerY.equalToSuperview()
+            make.leading.equalTo(16)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.lableTable.font = UIFont.systemFont(ofSize: 18)
+            self.lableLanguage.font = UIFont.systemFont(ofSize: 18)
+            self.imageTable.snp.remakeConstraints { make in
+                make.width.height.equalTo(24)
+                make.centerY.equalToSuperview()
+                make.leading.equalTo(16)
+            }
+        }
+    }
+    
     func fill(with: SettingsStruct) {
         imageTable.image = UIImage(named: with.image)?.withRenderingMode(.alwaysTemplate)
         lableTable.text = with.title
@@ -137,6 +159,9 @@ class SettingsCell: UITableViewCell {
     
     @objc private func changeTheme(sender: UISwitch) {
         delegate?.didChangeTheme(isOn: switchTable.isOn)
+    }
+    @objc private func buttonTableTapped(sender: UIButton) {
+        delegate?.navigateToNextController()
     }
 }
 

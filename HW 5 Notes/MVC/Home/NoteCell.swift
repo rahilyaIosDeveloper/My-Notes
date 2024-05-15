@@ -57,6 +57,5 @@ class NoteCell: UICollectionViewCell {
     
     func fill(title: String) {
         titleLabel.text = title
-      
     }
 }

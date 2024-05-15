@@ -84,6 +84,7 @@ extension SettingsController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.reuseId, for: indexPath) as! SettingsCell
         cell.fill(with: settingData[indexPath.row])
         cell.delegate = self
+        cell.selectionStyle = .none
         return cell
     }
 }
@@ -94,14 +95,37 @@ extension SettingsController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! SettingsCell
+        cell.didSelect()
         if indexPath.row == 2 {
-            coreDataService.deleteAllNotes()
+            let alertController = UIAlertController(title: "Удалить?", message: "Вы уверены, что хотите удалить заметки?", preferredStyle: .alert)
+            let acceptAction = UIAlertAction(title: "Да", style: .cancel) { action in
+                self.coreDataService.deleteAllNotes()
+                let date = Date()
+                let homeView = HomeView()
+                self.navigationController?.pushViewController(homeView, animated: true)
+            }
+            let declineAction = UIAlertAction(title: "Нет", style: .default) { action in
+                self.navigationController?.popViewController(animated: true)
+                
+            }
+            alertController.addAction(acceptAction)
+            alertController.addAction(declineAction)
+            present(alertController, animated: true)
+        } else if indexPath.row == 0 {
+            let languageView = LanguageController()
+            navigationController?.present(languageView, animated: true)
+           
         }
     }
     
 }
-
 extension SettingsController: SettingsDelegate {
+    func navigateToNextController() {
+        let languageController = LanguageController()
+        navigationController?.present(languageController, animated: true)
+    }
+    
     func didChangeTheme(isOn: Bool) {
         UserDefaults.standard.set(isOn, forKey: "theme")
         if isOn {
