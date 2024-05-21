@@ -102,12 +102,6 @@ class NoteView: UIViewController {
         if !title.isEmpty && !description.isEmpty {
             controller?.onAddNote(title: titleTextField.text ?? "", description: description, color: color)
         }
-        
-        //        coreDataService.addNote(id: id, title: titleTextField.text ?? "", description: descriptionTextView.text ?? "", date: date, color: color) { response in
-        //            if response == .failure {
-        //        } else {
-//    }
-//    }
 }
     
     func setupData() {

@@ -15,8 +15,6 @@ protocol HomeControllerProtocol {
 
 class HomeController: HomeControllerProtocol {
     
-    
-    
     private var view: HomeViewProtocol?
     private var model: HomeModelProtocol?
     

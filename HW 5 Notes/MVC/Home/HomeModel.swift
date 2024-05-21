@@ -11,6 +11,7 @@ protocol HomeModelProtocol: AnyObject {
     func tookNotes()
     func searchNote(title: String)
 }
+
 class HomeModel: HomeModelProtocol {
     
 
