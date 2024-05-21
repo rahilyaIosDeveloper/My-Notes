@@ -36,12 +36,10 @@ class LanguageController: UIViewController {
         view.backgroundColor = .systemBackground
         
         
-        
         view.addSubview(mainLabel)
         mainLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
             make.horizontalEdges.equalToSuperview().inset(16)
-//            make.height.equalTo(36)
         }
         
         view.addSubview(languageTableView)
@@ -51,9 +49,6 @@ class LanguageController: UIViewController {
             make.horizontalEdges.equalToSuperview().inset(12)
         }
     }
-
-    
-    
 }
 
 extension LanguageController: UITableViewDataSource {
@@ -68,7 +63,6 @@ extension LanguageController: UITableViewDataSource {
         cell.titleTable.text = language.title
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-        
         return cell
     }
 
@@ -77,5 +71,4 @@ extension LanguageController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 55
     }
-
 }

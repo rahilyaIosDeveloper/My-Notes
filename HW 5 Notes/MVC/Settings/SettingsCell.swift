@@ -74,8 +74,6 @@ class SettingsCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
        contentView.backgroundColor = .secondarySystemBackground
 
-        
-        
         addSubview(imageTable)
         imageTable.snp.makeConstraints { make in
             make.centerY.equalToSuperview()

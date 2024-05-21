@@ -10,14 +10,22 @@ import UIKit
 import SnapKit
 
 protocol NoteViewProtocol: AnyObject {
+    func successSave()
+    func failuresave()
+    func successDelete()
+    func failureDelete()
+    func successUpdateNote()
 }
 
 
 class NoteView: UIViewController {
     
-    weak var delegate: NoteViewProtocol?
- 
     private let coreDataService = CoreDataService.shared
+    
+    weak var delegate: NoteViewProtocol?
+    
+    private var controller: NoteControllerProtocol?
+    
     var note: Note?
     
     private var colors: [UIColor] = [.systemPink, .cyan, .systemOrange, .systemPurple]
@@ -68,28 +76,70 @@ class NoteView: UIViewController {
         navigationItem.rightBarButtonItem = rightBarButtonItem
     }
     
+    private lazy var dateLabel: UILabel = {
+        let view = UILabel()
+        view.textAlignment = .right
+        return view
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        controller = NoteController(view: self)
         setupConstraints()
         setupNavigationItem()
+        setupData()
     }
     
     @objc func saveButtonTapped() {
-        let id = UUID().uuidString
-        print(id)
-        let date = Date()
         let color = generateColor()
-        coreDataService.addNote(id: id, title: titleTextField.text ?? "", description: descriptionTextView.text ?? "", date: date, color: color)
+        
+        
+        guard let title = titleTextField.text, let description = descriptionTextView.text else {
+            return
+        }
+        if !title.isEmpty && !description.isEmpty {
+            controller?.onAddNote(title: titleTextField.text ?? "", description: description, color: color)
+        }
+        
+        //        coreDataService.addNote(id: id, title: titleTextField.text ?? "", description: descriptionTextView.text ?? "", date: date, color: color) { response in
+        //            if response == .failure {
+        //        } else {
+//    }
+//    }
+}
+    
+    func setupData() {
+        guard let note = note else {
+            return
+        }
+        titleTextField.text = note.title
+        descriptionTextView.text = note.desc
+        
+        let date = note.date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = dateFormatter.string(from: date ?? Date())
+        
+        dateLabel.text = dateString
     }
+    
     
     @objc func deleteButtonTapped() {
         guard let note = note, let id = note.id else {
             return
         }
-        coreDataService.delete(id: id)
+        coreDataService.delete(id: id) { response in
+            if response == .success {
+                self.controller?.onSuccessDelete()
+            } else {
+                self.controller?.onFailureDelete()
+            }
+        }
     }
-    
+        
+
     
         @objc func copyButtonTapped() {
     }
@@ -146,5 +196,39 @@ class NoteView: UIViewController {
             make.trailing.equalTo(descriptionTextView.snp.trailing).offset(-15)
             make.height.width.equalTo(32)
         }
+        
+        view.addSubview(dateLabel)
+        dateLabel.snp.makeConstraints { make in
+            make.right.equalTo(descriptionTextView.snp.right)
+            make.top.equalTo(descriptionTextView.snp.bottom).offset(5)
+            make.width.equalToSuperview()
+            make.height.equalTo(20)
+        }
     }
+}
+
+extension NoteView: NoteViewProtocol {
+    func successSave() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func failuresave() {
+        let alert = UIAlertController(title: "Ошибка", message: "Не удалось сохранить заметку, повторите попытку заново!", preferredStyle: .alert)
+        let acceptAlert = UIAlertAction(title: "Ок", style: .cancel)
+        alert.addAction(acceptAlert)
+        present(alert, animated: true)
+    }
+    func successDelete() {
+        navigationController?.popViewController(animated: true)
+    }
+    func failureDelete() {
+        let alert = UIAlertController(title: "Ошибка", message: "Не удалось удалить заметку", preferredStyle: .alert)
+        let acceptAlert = UIAlertAction(title: "Назад", style: .destructive)
+        alert.addAction(acceptAlert)
+        present(alert, animated: true)
+    }
+    func successUpdateNote() {
+        navigationController?.popViewController(animated: true)
+    }
+    
 }

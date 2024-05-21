@@ -100,14 +100,15 @@ extension SettingsController: UITableViewDelegate {
         if indexPath.row == 2 {
             let alertController = UIAlertController(title: "Удалить?", message: "Вы уверены, что хотите удалить заметки?", preferredStyle: .alert)
             let acceptAction = UIAlertAction(title: "Да", style: .cancel) { action in
-                self.coreDataService.deleteAllNotes()
-                let date = Date()
-                let homeView = HomeView()
-                self.navigationController?.pushViewController(homeView, animated: true)
+                self.coreDataService.deleteAllNotes { response in
+                    if response == .success {
+                        let homeView = HomeView()
+                        self.navigationController?.popViewController(animated: true)
+                    } else {
+                    }
+                }
             }
             let declineAction = UIAlertAction(title: "Нет", style: .default) { action in
-                self.navigationController?.popViewController(animated: true)
-                
             }
             alertController.addAction(acceptAction)
             alertController.addAction(declineAction)

@@ -18,9 +18,6 @@ class LanguageCell: UITableViewCell {
     
     static let reuseId = "language_cell"
     
-    
-    
-    
     lazy var imageTable: UIImageView = {
         let view = UIImageView()
         return view
@@ -42,7 +39,7 @@ class LanguageCell: UITableViewCell {
         imageTable.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalTo(16)
-            make.height.width.equalTo(22)
+            make.height.width.equalTo(32)
         }
         
         addSubview(titleTable)
