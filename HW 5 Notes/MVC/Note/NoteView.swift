@@ -32,10 +32,9 @@ class NoteView: UIViewController {
     
     private lazy var titleTextField: UITextField = {
         let view = UITextField()
-        view.placeholder = "Title"
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 12
-        view.placeholder = "Название"
+        view.placeholder = "Name".localised()
         let spacerView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 0))
         view.leftView = spacerView
         view.leftViewMode = .always
@@ -45,13 +44,14 @@ class NoteView: UIViewController {
     private lazy var descriptionTextView: UITextView = {
         let view = UITextView()
         view.layer.cornerRadius = 10
+        view.font = UIFont(name: "", size: 30)
         view.backgroundColor = UIColor(hex: "#EEEEEF")
         return view
     }()
     
     private lazy var saveButton: UIButton = {
         let view = UIButton(type: .system)
-        view.setTitle("Сохранить", for: .normal)
+        view.setTitle("Save".localised(), for: .normal)
         view.tintColor = .white
         view.backgroundColor = .systemPink
         view.layer.cornerRadius = 44 / 2
@@ -88,21 +88,36 @@ class NoteView: UIViewController {
         view.backgroundColor = .systemBackground
         controller = NoteController(view: self)
         setupConstraints()
-        setupNavigationItem()
+        if let note = note {
+            setupNavigationItem()
+        }
         setupData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if UserDefaults.standard.bool(forKey: "theme") == true {
+            view.overrideUserInterfaceStyle = .dark
+        } else {
+            view.overrideUserInterfaceStyle = .light
+        }
+    }
+    
     @objc func saveButtonTapped() {
-        let color = generateColor()
-        
-        
         guard let title = titleTextField.text, let description = descriptionTextView.text else {
             return
         }
-        if !title.isEmpty && !description.isEmpty {
-            controller?.onAddNote(title: titleTextField.text ?? "", description: description, color: color)
+        if let note = note {
+            controller?.onUpdateNote(id: note.id ?? "", title: title, description: description)
+        } else {
+            let color = generateColor()
+            
+            if !title.isEmpty && !description.isEmpty {
+                controller?.onAddNote(title: titleTextField.text ?? "", description: description, color: color)
+            }
         }
 }
+
     
     func setupData() {
         guard let note = note else {
@@ -132,7 +147,6 @@ class NoteView: UIViewController {
             }
         }
     }
-        
 
     
         @objc func copyButtonTapped() {
@@ -207,8 +221,8 @@ extension NoteView: NoteViewProtocol {
     }
     
     func failuresave() {
-        let alert = UIAlertController(title: "Ошибка", message: "Не удалось сохранить заметку, повторите попытку заново!", preferredStyle: .alert)
-        let acceptAlert = UIAlertAction(title: "Ок", style: .cancel)
+        let alert = UIAlertController(title: "Error".localised(), message: "Failed to save note, please try again!".localised(), preferredStyle: .alert)
+        let acceptAlert = UIAlertAction(title: "Ok".localised(), style: .cancel)
         alert.addAction(acceptAlert)
         present(alert, animated: true)
     }
@@ -216,8 +230,8 @@ extension NoteView: NoteViewProtocol {
         navigationController?.popViewController(animated: true)
     }
     func failureDelete() {
-        let alert = UIAlertController(title: "Ошибка", message: "Не удалось удалить заметку", preferredStyle: .alert)
-        let acceptAlert = UIAlertAction(title: "Назад", style: .destructive)
+        let alert = UIAlertController(title: "Error".localised(), message: "Failed to delete note".localised(), preferredStyle: .alert)
+        let acceptAlert = UIAlertAction(title: "Back".localised(), style: .destructive)
         alert.addAction(acceptAlert)
         present(alert, animated: true)
     }

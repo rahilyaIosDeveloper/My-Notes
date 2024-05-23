@@ -5,3 +5,26 @@
   Created by Rahilya Nazaralieva on 22/5/24.
   
 */
+"Choose language" = "Choose language";
+"Name" = "Name";
+"English" = "English";
+"Save" = "Save";
+"Error" = "Error";
+"Failed to save note, please try again!" = "Failed to save note, please try again!";
+"Ok"= "Ok";
+"Failed to delete note" = "Failed to delete note";
+"Back" = "Back";
+"Language" = "Language";
+"Choose Theme" = "Choose Theme";
+"Clear data" = "Clear data";
+"Settings" = "Settings";
+"Delete?" = "Delete?";
+"Are you sure you want to delete the notes?" = "Are you sure you want to delete the notes??" ;
+"Yes" = "Yes";
+"No" = "No";
+"Home" = "Home";
+"Notes" = "Notes";
+"Search" = "Search";
+"Home" = "Home";
+
+

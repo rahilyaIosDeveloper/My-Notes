@@ -18,6 +18,7 @@ protocol NoteControllerProtocol: AnyObject {
     func onSuccessDelete()
     func onFailureDelete()
     func onSuccessUpdateNote(note: Note?, id: String, title: String, description: String, date: Date)
+    func onUpdateNote(id: String, title: String, description: String)
 }
     
 class NoteController: NoteControllerProtocol {
@@ -51,6 +52,7 @@ class NoteController: NoteControllerProtocol {
     func onSuccessUpdateNote(note: Note?, id: String, title: String, description: String, date: Date) {
         view?.successUpdateNote()
     }
+    func onUpdateNote(id: String, title: String, description: String) {
+        model?.updateNote(id: id, title: title, description: description)
+    }
 }
-
-

@@ -24,7 +24,6 @@ class HomeView: UIViewController {
     
     private lazy var searchBar: UISearchBar = {
         let view = UISearchBar()
-        view.placeholder = "Search"
         view.layer.cornerRadius = 10
         view.backgroundImage = UIImage()
         view.searchTextField.addTarget(self, action: #selector(noteTextEditingChanged), for: .editingChanged)
@@ -33,7 +32,6 @@ class HomeView: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let view = UILabel()
-        view.text = "Notes"
         view.textColor = UIColor(hex: "#262626")
         view.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         return view
@@ -63,7 +61,6 @@ class HomeView: UIViewController {
     
     
     private func setupNavigationItem() {
-        title = "Home"
         let rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "gear"),
             style: .plain,
@@ -95,6 +92,7 @@ class HomeView: UIViewController {
             controller = HomeController(view: self)
             
             setupNavigationItem()
+            setupLocalizedText()
             
             view.addSubview(searchBar)
             searchBar.snp.makeConstraints { make in
@@ -127,10 +125,34 @@ class HomeView: UIViewController {
         
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
+            navigationItem.hidesBackButton = true
+            
             controller?.takeNotes()
+            setupLocalizedText()
+            
+            let appearance = UINavigationBarAppearance()
+            if UserDefaults.standard.bool(forKey: "theme") == true {
+                navigationController?.navigationBar.barTintColor = .white
+                navigationItem.rightBarButtonItem?.tintColor = .white
+                view.overrideUserInterfaceStyle = .dark
+                appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            } else {
+                navigationController?.navigationBar.barTintColor = .black
+                navigationItem.rightBarButtonItem?.tintColor = .black
+                view.overrideUserInterfaceStyle = .light 
+                appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            }
+            navigationItem.standardAppearance = appearance
         }
-    }
     
+    func setupLocalizedText() {
+        searchBar.placeholder = "Search".localised()
+        titleLabel.text = "Notes".localised()
+        titleLabel.textColor = UserDefaults.standard.bool(forKey: "theme") ? .white : .black
+        title = "Home".localised()
+    }
+}
+
     extension HomeView: UICollectionViewDataSource {
         func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
             return allNotes.count
@@ -139,6 +161,7 @@ class HomeView: UIViewController {
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NoteCell.reuseId, for: indexPath) as! NoteCell
             cell.fill(title: allNotes[indexPath.row].title ?? "")
+            
             return cell
         }
     }
@@ -153,7 +176,6 @@ class HomeView: UIViewController {
             noteMain.note = allNotes[indexPath.row]
             navigationController?.pushViewController(noteMain, animated: true)
         }
-        
     }
     
     extension HomeView: HomeViewProtocol {

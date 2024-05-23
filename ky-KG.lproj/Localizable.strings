@@ -5,3 +5,25 @@
   Created by Rahilya Nazaralieva on 22/5/24.
   
 */
+"Choose language" = "Тилди тандаңыз";
+"Name" = "Аты";
+"English" = "Кыргызча";
+"Save" = "Сактоо";
+"Error" = "Ката";
+"Failed to save note, please try again!" = "Эскертүү сакталбады, кайра аракет кылыңыз!";
+"Ok" = "Ок";
+"Failed to delete note" = "Жазуулар жок кылынбай калды";
+"Back" = "Артка";
+"Language" = "Тил";
+"Choose Theme" = "Теманы танданыз";
+"Clear data" = "Маалыматтарды тазалоо";
+"Settings" = "Орнотуулар";
+"Delete?" = "Очуруу?";
+"Are you sure you want to delete the notes?" = "Жазууларды жок кылгыңыз келеби?";
+"Yes" = "Ооба";
+"No" = "Жок";
+"Home" = "Башкы болмо";
+"Notes" = "Жазуулар";
+"Search" = "Издөө";
+"Home" = "Башкы болмо";
+

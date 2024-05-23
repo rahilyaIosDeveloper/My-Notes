@@ -23,26 +23,48 @@ class SettingsController: UIViewController {
     
     
     private var settingData: [SettingsStruct] = [
-        SettingsStruct(image: "language", title: "Язык", type: .withButton, description: "Русский"), 
-        SettingsStruct(image: "moon", title: "Темная тема", type: .withSwitch, description: ""),
-        SettingsStruct(image: "trash", title: "Очистить данные", type: .none, description: "")]
-
+        SettingsStruct(image: "language", title: "Choose language".localised(), type: .withButton, description: "English".localised()),
+        SettingsStruct(image: "moon", title: "Choose Theme".localised(), type: .withSwitch, description: ""),
+        SettingsStruct(image: "trash", title: "Clear data".localised(), type: .none, description: "")]
+    
+    func updateSettingsLanguage() {
+        settingData = [SettingsStruct(image: "language", title: "Choose language".localised(),
+                                      type: .withButton, description: "English".localised()),
+                       SettingsStruct(image: "moon", title: "Choose Theme".localised(),
+                                      type: .withSwitch, description: ""),
+                       SettingsStruct(image: "trash", title: "Clear data".localised(),
+                                      type: .none, description: "")]
+        settingsTableView.reloadData()
+        
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupLocalizedText()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if UserDefaults.standard.bool(forKey: "theme") {
+        
+        
+        let appearance = UINavigationBarAppearance()
+        if UserDefaults.standard.bool(forKey: "theme") == true {
+            navigationController?.navigationBar.barTintColor = .white
+            navigationItem.rightBarButtonItem?.tintColor = .white
             view.overrideUserInterfaceStyle = .dark
+            appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         } else {
+            navigationController?.navigationBar.barTintColor = .black
+            navigationItem.rightBarButtonItem?.tintColor = .black
             view.overrideUserInterfaceStyle = .light
+            appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
         }
-        settingsTableView.reloadData()
+        navigationItem.standardAppearance = appearance
     }
+    
     
     private func setupUI() {
         view.backgroundColor = .systemBackground
@@ -52,15 +74,15 @@ class SettingsController: UIViewController {
     
     private func setupConstraints() {
         view.addSubview(settingsTableView)
-        settingsTableView.snp.makeConstraints {make in 
+        settingsTableView.snp.makeConstraints {make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(160)
             make.horizontalEdges.equalToSuperview().inset(12)
         }
     }
-
+    
     private func setupNavBar() {
-        title = "Settings"
+        title = "Settings".localised()
         
         let rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "gear"),
@@ -73,8 +95,23 @@ class SettingsController: UIViewController {
     @objc
     private func settingsButtonTapped() {
     }
+    
+    @objc
+    private func languageChanged() {
+        setupLocalizedText()
+    }
+    
+    private func setupLocalizedText() {
+        title = "Настройки".localised()
+        settingData = [
+            SettingsStruct(image: "language", title: "Language".localised(), type: .withButton, description: "English".localised()),
+            SettingsStruct(image: "moon", title: "Choose Theme".localised(), type: .withSwitch, description: ""),
+            SettingsStruct(image: "trash", title: "Clear data".localised(), type: .none, description: "")
+        ]
+        settingsTableView.reloadData()
+        setupNavBar()
+    }
 }
-
 extension SettingsController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return settingData.count
@@ -98,8 +135,8 @@ extension SettingsController: UITableViewDelegate {
         let cell = tableView.cellForRow(at: indexPath) as! SettingsCell
         cell.didSelect()
         if indexPath.row == 2 {
-            let alertController = UIAlertController(title: "Удалить?", message: "Вы уверены, что хотите удалить заметки?", preferredStyle: .alert)
-            let acceptAction = UIAlertAction(title: "Да", style: .cancel) { action in
+            let alertController = UIAlertController(title: "Delete?".localised(), message: "Are you sure you want to delete the notes?".localised(), preferredStyle: .alert)
+            let acceptAction = UIAlertAction(title: "Yes".localised(), style: .cancel) { action in
                 self.coreDataService.deleteAllNotes { response in
                     if response == .success {
                         let homeView = HomeView()
@@ -108,19 +145,27 @@ extension SettingsController: UITableViewDelegate {
                     }
                 }
             }
-            let declineAction = UIAlertAction(title: "Нет", style: .default) { action in
+            let declineAction = UIAlertAction(title: "No".localised(), style: .default) { action in
             }
             alertController.addAction(acceptAction)
             alertController.addAction(declineAction)
             present(alertController, animated: true)
         } else if indexPath.row == 0 {
             let languageView = LanguageController()
-            navigationController?.present(languageView, animated: true)
-           
+            languageView.delegate = self
+            let multiplier = 0.30
+            let customDetent = UISheetPresentationController.Detent.custom(resolver: { context in
+                languageView.view.frame.height * multiplier
+            })
+            if let sheet = languageView.sheetPresentationController {
+                sheet.detents = [customDetent, .medium()]
+                sheet.prefersGrabberVisible = true
+                self.present(languageView, animated: true)
+            }
         }
     }
-    
 }
+
 extension SettingsController: SettingsDelegate {
     func navigateToNextController() {
         let languageController = LanguageController()
@@ -134,5 +179,18 @@ extension SettingsController: SettingsDelegate {
         } else {
             view.overrideUserInterfaceStyle = .light
         }
+//        setupNavBar()
     }
 }
+extension SettingsController: LanguageViewDelegate {
+    func didLanguageSelect(languageType: LanguageType) {
+        updateSettingsLanguage()
+        setupLocalizedText()
+    }
+    
+    func didLanguageSelect() {
+        setupLocalizedText()
+        updateSettingsLanguage()
+    }
+}
+

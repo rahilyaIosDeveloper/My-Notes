@@ -17,9 +17,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
         
-//        let nav1 = UINavigationController(rootViewController: SettingsController())
-//        
-//        window.rootViewController =  nav1
         var rootViewController: UIViewController?
         
         if UserDefaults.standard.bool(forKey: "onBoardShow") {

@@ -30,7 +30,6 @@ class CoreDataService {
     // CRUD operations, CREATE - запись, READ - чтение, UPDATE - обновить, DELETE - удалить
     
     func addNote(id: String, title: String, description: String, date: Date, color: String, completionHandler: @escaping (CoreDataResponse) -> ()) {
-        DispatchQueue.global(qos: .background).async {
             guard let context = self.context else {
                 DispatchQueue.main.async {
                     completionHandler(.failure)
@@ -55,7 +54,6 @@ class CoreDataService {
             DispatchQueue.main.async {
                 completionHandler(.success)
             }
-        }
     }
     
     func fetchNotes(completionHandler: @escaping (CoreDataResponse) -> ()) -> [Note] {
@@ -82,7 +80,6 @@ class CoreDataService {
     }
     
     func updateNote(id: String, title: String, description: String, date: Date) {
-        DispatchQueue.global(qos: .background).async {
             guard let context = self.context else {
                 return
             }
@@ -96,11 +93,9 @@ class CoreDataService {
             } catch {
                 print(error.localizedDescription)
             }
-        }
     }
     
     func delete(id: String, completionHandler: @escaping (CoreDataResponse) -> Void) {
-        DispatchQueue.global(qos: .background).async {
             guard let context = self.context else {
                 DispatchQueue.main.async {
                     completionHandler(.failure)
@@ -126,10 +121,8 @@ class CoreDataService {
                 }
             }
         }
-    }
     
     func deleteAllNotes(completionHandler: @escaping (CoreDataResponse) -> Void) {
-        DispatchQueue.global(qos: .background).async {
             guard let context = self.context else {
                 DispatchQueue.main.async {
                     completionHandler(.failure)
@@ -156,4 +149,4 @@ class CoreDataService {
             }
         }
     }
-}
+

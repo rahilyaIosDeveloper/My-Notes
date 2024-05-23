@@ -14,10 +14,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        if let savedLanguageString = UserDefaults.standard.string(forKey: "selectedLanguage"),
+           let savedLanguage = LanguageType(rawValue: savedLanguageString) {
+            AppLanguageManager.shared.setAppLanguage(languageType: savedLanguage)
+        } else {
+            AppLanguageManager.shared.setAppLanguage(languageType: .en)
+        }
         return true
     }
-
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
@@ -56,8 +60,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
-
 }
 
 

@@ -9,11 +9,16 @@ import Foundation
 import UIKit
 import SnapKit
 
+protocol LanguageViewDelegate: AnyObject {
+    func didLanguageSelect(languageType: LanguageType)
+}
+
 class LanguageController: UIViewController {
+    
+   weak var delegate: LanguageViewDelegate?
     
     lazy var mainLabel: UILabel = {
         let view = UILabel()
-        view.text = "Выберите язык"
         view.font = .systemFont(ofSize: 22, weight: .bold)
         return view
     }()
@@ -28,12 +33,18 @@ class LanguageController: UIViewController {
         return view
     }()
     
-    private var someLanguage: [LanguageStruct] = [LanguageStruct(image: "kg_flag", title: "Кыргызча"),
-                                                  LanguageStruct(image: "rus_flag", title: "Русский"), LanguageStruct(image: "usa_flag", title: "English")]
+    private var someLanguage: [LanguageStruct] = [LanguageStruct(image: "kg_flag", title: "Кыргызча", languageType: .kg),
+                                                  LanguageStruct(image: "rus_flag", title: "Русский", languageType: .ru), LanguageStruct(image: "usa_flag", title: "English", languageType: .en)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        setupLocalizedText()
+        if UserDefaults.standard.bool(forKey: "theme") == true {
+            view.overrideUserInterfaceStyle = .dark
+        } else {
+            view.overrideUserInterfaceStyle = .light
+        }
         
         
         view.addSubview(mainLabel)
@@ -49,6 +60,9 @@ class LanguageController: UIViewController {
             make.horizontalEdges.equalToSuperview().inset(12)
         }
     }
+    func setupLocalizedText() {
+        mainLabel.text = "Choose language".localised()
+    }
 }
 
 extension LanguageController: UITableViewDataSource {
@@ -61,14 +75,23 @@ extension LanguageController: UITableViewDataSource {
         let language = someLanguage[indexPath.row]
         cell.imageTable.image = UIImage(named: language.image)
         cell.titleTable.text = language.title
+        cell.titleTable.textColor = UserDefaults.standard.bool(forKey: "theme") ? .white : .black
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
         return cell
     }
-
 }
+
 extension LanguageController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 55
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let languageType = someLanguage[indexPath.row].languageType
+        AppLanguageManager.shared.setAppLanguage(languageType: languageType)
+        UserDefaults.standard.set(languageType.rawValue, forKey: "selectedLanguage")
+        setupLocalizedText()
+        delegate?.didLanguageSelect(languageType: languageType)
     }
 }

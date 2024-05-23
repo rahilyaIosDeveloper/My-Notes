@@ -12,6 +12,7 @@ protocol NoteModelProtocol: AnyObject {
     func addNote(title: String, description: String, color: String)
     func deleteNote(id: String)
     func updateNote(note: Note?, id: String, title: String, description: String, date: Date)
+    func updateNote(id: String, title: String, description: String)
 }
 
 class NoteModel: NoteModelProtocol {
@@ -44,6 +45,12 @@ class NoteModel: NoteModelProtocol {
          }
          controller?.onSuccessUpdateNote(note: note, id: id, title: title, description: description, date: date)
      }
+    
+    func updateNote(id: String, title: String, description: String) {
+            let date = Date()
+             coreDataService.updateNote(id: id, title: title, description: description, date: date)
+     }
+    
     func deleteNote(id: String) {
         coreDataService.delete(id: id) { response in
             if response == .success {

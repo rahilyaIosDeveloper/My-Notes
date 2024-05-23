@@ -9,9 +9,11 @@ import Foundation
 import UIKit
 import SnapKit
 
+
 struct LanguageStruct {
     let image: String
     let title: String
+    let languageType: LanguageType
 }
 
 class LanguageCell: UITableViewCell {
