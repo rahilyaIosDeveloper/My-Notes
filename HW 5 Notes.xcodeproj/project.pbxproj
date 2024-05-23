@@ -115,8 +115,8 @@
 			isa = PBXGroup;
 			children = (
 				CE3BF3FF2BE00195009AC076 /* SettingsCell.swift */,
-				CE3BF4012BE001B3009AC076 /* SettingsController.swift */,
 				CE3BF4032BE001C9009AC076 /* SettingsModel.swift */,
+				CE3BF4012BE001B3009AC076 /* SettingsController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
